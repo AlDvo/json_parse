@@ -25,15 +25,15 @@ public class Main {
     }
 
     private static HttpResponse<String> getHttpResponse(String uri) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newBuilder().build();
+        try (HttpClient client = HttpClient.newBuilder().build()) {
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(uri))
-                .GET()
-                .build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(uri))
+                    .GET()
+                    .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response;
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        }
     }
 
     private static List<TotalInfoExchanger> getTotalInfoExchangers(Exchanger[] exch) {
@@ -47,7 +47,6 @@ public class Main {
     private static Exchanger[] getExchangers(HttpResponse<String> response) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         response.body();
-        Exchanger[] exchangers = om.readValue(response.body(), Exchanger[].class);
-        return exchangers;
+        return om.readValue(response.body(), Exchanger[].class);
     }
 }
