@@ -12,6 +12,9 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// такса в самом конце статьи https://akupreychik.notion.site/10-HttpClient-d0f7f387bf084f2a9296f1b88d7f72a1
+
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         HttpResponse<String> response = getHttpResponse("https://belarusbank.by/api/kursExchange");
